@@ -6,9 +6,79 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    d:Width="1280"
+    d:Height="720">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid Name="Root" Padding="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Border
+                Grid.Column="1"
+                VerticalAlignment="Stretch"
+                HorizontalAlignment="Stretch"
+                Margin="10"
+                CornerRadius="10"
+                Background="#283748">
+                <StackPanel VerticalAlignment="Bottom">
+                    <TextBlock
+                        FontFamily="/Assets/Fonts/mononoki.otf#mononoki"
+                        Name="Debug"
+                        FontSize="18"
+                        Foreground="White"
+                        Margin="20"
+                        TextWrapping="Wrap"
+                        d:Text="Logging is cool!">
+                    </TextBlock>
+                </StackPanel>
+            </Border>
+        </Grid>
+        <Border Name="WelcomeScreen" Background="Black">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <Path 
+                    Name="WelcomeLogo" 
+                    Width="120" 
+                    Height="120"
+                    Stretch="Fill"
+                    Margin="60"
+                    d:Data="M200 100C200 107.593 197.778 114.259 193.333 120C189.074 125.741 183.611 129.63 176.944 131.667C180.093 137.963 181.204 144.722 180.278 151.944C179.352 158.981 176.204 165.185 170.833 170.556C167.5 173.889 163.796 176.389 159.722 178.056C155.648 179.537 151.481 180.278 147.222 180.278C141.667 180.278 136.574 179.074 131.944 176.667C129.722 183.519 125.741 189.167 120 193.611C114.259 197.87 107.593 200 100 200C92.5926 200 85.9259 197.87 80 193.611C74.2593 189.167 70.3704 183.611 68.3333 176.944C63.5185 179.352 58.4259 180.556 53.0556 180.556C48.7963 180.556 44.6296 179.815 40.5556 178.333C36.4815 176.667 32.7778 174.167 29.4444 170.833C24.0741 165.463 20.9259 159.259 20 152.222C19.0741 145 20.1852 138.241 23.3333 131.944C16.4815 129.722 10.8333 125.741 6.38889 120C2.12963 114.259 0 107.593 0 100C0 92.4074 2.12963 85.7407 6.38889 80C10.8333 74.2593 16.4815 70.2778 23.3333 68.0556C20 61.7593 18.7963 55.0926 19.7222 48.0555C20.8333 40.8333 24.0741 34.6296 29.4444 29.4444C35.9259 22.7778 43.7037 19.4444 52.7778 19.4444C58.1481 19.4444 63.2407 20.7407 68.0556 23.3333C70.2778 16.4815 74.2593 10.9259 80 6.66666C85.7407 2.22222 92.4074 0 100 0C107.593 0 114.259 2.22222 120 6.66666C125.741 10.9259 129.63 16.4815 131.667 23.3333C136.296 20.9259 141.481 19.7222 147.222 19.7222C151.481 19.7222 155.648 20.5555 159.722 22.2222C163.796 23.7037 167.407 26.1111 170.556 29.4444C175.926 34.8148 179.074 41.1111 180 48.3333C180.926 55.3704 179.815 62.037 176.667 68.3333C183.519 70.3704 189.074 74.2593 193.333 80C197.778 85.7407 200 92.4074 200 100ZM123.611 123.611C125.648 121.574 127.685 119.907 129.722 118.611C131.944 117.315 134.352 116.204 136.944 115.278C134.537 110.463 133.333 105.37 133.333 100C133.333 94.8148 134.537 89.6296 136.944 84.4444C131.944 82.7778 127.5 80.0926 123.611 76.3889C119.722 72.5 116.944 67.963 115.278 62.7778C110.463 65.1852 105.37 66.3889 100 66.3889C94.8148 66.3889 89.6296 65.1852 84.4444 62.7778C82.963 67.963 80.1852 72.5 76.1111 76.3889C72.2222 80.0926 67.7778 82.7778 62.7778 84.4444C65.3704 89.0741 66.6667 94.1667 66.6667 99.7222C66.6667 105.278 65.3704 110.463 62.7778 115.278C73.5185 118.981 80.7407 126.204 84.4444 136.944C89.6296 134.537 94.8148 133.333 100 133.333C105.37 133.333 110.463 134.537 115.278 136.944C116.204 134.352 117.315 132.037 118.611 130C119.907 127.778 121.574 125.648 123.611 123.611Z">
+                    <Path.RenderTransform>
+                        <RotateTransform x:Name="WelcomeLogoRotator" Angle="0" CenterX="60" CenterY="60"></RotateTransform>
+                    </Path.RenderTransform>
+                    <Path.Fill>
+                        <SolidColorBrush x:Name="WelcomeLogoBrush" Color="White"></SolidColorBrush>
+                    </Path.Fill>
+                </Path>
+                <TextBlock 
+                    Name="WelcomeTitle" 
+                    Foreground="White" 
+                    FontFamily="/Assets/Fonts/Block-font.otf#Block-font"
+                    FontSize="32"
+                    FontWeight="Normal"
+                    TextAlignment="Center"
+                    d:Text="decentralized things"
+                    Opacity="0"
+                    d:Opacity="1">
+                </TextBlock>
+                <TextBlock 
+                    Name="WelcomeHint" 
+                    Foreground="#80ffffff" 
+                    FontFamily="/Assets/Fonts/Open-Sans.ttf#Open Sans"
+                    FontSize="18"
+                    FontWeight="Bold"
+                    TextAlignment="Center"
+                    Opacity="0"
+                    d:Opacity="1"
+                    d:Text="tap to continue">
+                </TextBlock>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>
