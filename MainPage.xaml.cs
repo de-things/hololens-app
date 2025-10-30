@@ -1,5 +1,6 @@
 ﻿using DT.Source.Graphics;
 using DT.Source.Windows;
+using System;
 using System.Threading.Tasks;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml.Markup;
@@ -15,7 +16,6 @@ namespace DT
         public MainPage()
         {
             this.InitializeComponent();
-
 
             Button MainButton = new();
 
@@ -40,6 +40,7 @@ namespace DT
             WelcomeTitle.Text = "decentralized things";
             WelcomeHint.Text = "tap to continue";
 
+            PlayLoginSound();
             Animation.WelcomeApproach(WelcomeLogo, WelcomeLogoRotator, WelcomeLogoBrush, WelcomeTitle, WelcomeHint);
 
             WelcomeScreen.PointerReleased += (s, a) =>
@@ -60,6 +61,15 @@ namespace DT
                 Debug.Text = Log;
                 await Task.Delay(500);
             }
+        }
+        async void PlayLoginSound()
+        {
+            var element = new Windows.UI.Xaml.Controls.MediaElement();
+            var folder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync(@"Assets\Sounds");
+            var file = await folder.GetFileAsync(@"Login.wav");
+            var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.Read);
+            element.SetSource(stream, "");
+            element.Play();
         }
     }
 }

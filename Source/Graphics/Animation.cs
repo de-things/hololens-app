@@ -10,11 +10,13 @@ namespace DT.Source.Graphics;
 class Animation
 {
     const double CLICK_TIME     = .12;
+    const double WAIT_TIME      = .5;
     const double DISOLVE_TIME   = .8;
-    const double APPROACH_TIME  = 1;
+    const double APPROACH_TIME  = 1.3;
     const double ROTATE_TIME    = 2;
 
     static readonly Duration ClickDuration = new(TimeSpan.FromSeconds(CLICK_TIME));
+    static readonly Duration WaitDuration = new(TimeSpan.FromSeconds(WAIT_TIME));
     static readonly Duration ApproachDuration = new(TimeSpan.FromSeconds(APPROACH_TIME));
     static readonly Duration RotateDuration = new(TimeSpan.FromSeconds(ROTATE_TIME));
     static readonly Duration DisolveDuration = new(TimeSpan.FromSeconds(DISOLVE_TIME));
@@ -238,5 +240,108 @@ class Animation
         {
             element.Visibility = Visibility.Collapsed;
         };
+    }
+    public static void Show(Border element)
+    {
+        element.Visibility = Visibility.Visible;
+
+        Storyboard SB = new();
+
+        var OpacityAnimaiton = new DoubleAnimation
+        {
+            From = element.Opacity,
+            To = 1,
+            Duration = DisolveDuration,
+            EasingFunction = EaseOut,
+        };
+        SB.Children.Add(OpacityAnimaiton);
+
+        Storyboard.SetTarget(OpacityAnimaiton, element);
+        Storyboard.SetTargetProperty(OpacityAnimaiton, "Opacity");
+
+        SB.Begin();
+    }
+    public static void ColorRamp(SolidColorBrush element)
+    {
+        Storyboard SB = new();
+
+        var ColorAnimaiton = new ColorAnimation
+        {
+            From = Color.FromArgb(255, 255, 255, 255),
+            To = Color.FromArgb(255, 255, 135, 98),
+            Duration = WaitDuration,
+            EasingFunction = EaseInOut,
+            RepeatBehavior = RepeatBehavior.Forever,
+            AutoReverse = true
+        };
+        SB.Children.Add(ColorAnimaiton);
+
+        ColorAnimaiton.EnableDependentAnimation = true;
+
+        Storyboard.SetTarget(ColorAnimaiton, element);
+        Storyboard.SetTargetProperty(ColorAnimaiton, "Color");
+
+        SB.Begin();
+    }
+    public static void Rotate(RotateTransform element)
+    {
+        Storyboard SB = new();
+
+        var RotateAnimaiton = new DoubleAnimation
+        {
+            From = 0,
+            To = 45,
+            Duration = WaitDuration,
+            EasingFunction = EaseInOut,
+            RepeatBehavior = RepeatBehavior.Forever,
+        };
+        SB.Children.Add(RotateAnimaiton);
+
+        RotateAnimaiton.EnableDependentAnimation = true;
+
+        Storyboard.SetTarget(RotateAnimaiton, element);
+        Storyboard.SetTargetProperty(RotateAnimaiton, "Angle");
+
+        SB.Begin();
+    }
+    public static void ErrorBlink(SolidColorBrush element, SolidColorBrush sourceColor)
+    {
+        Storyboard SB = new();
+
+        var ColorAnimaiton = new ColorAnimation
+        {
+            From = Color.FromArgb(255, 255, 98, 98),
+            To = Color.FromArgb(255, sourceColor.Color.R, sourceColor.Color.G, sourceColor.Color.B),
+            Duration = ClickDuration,
+            EasingFunction = EaseInOut,
+        };
+        SB.Children.Add(ColorAnimaiton);
+
+        ColorAnimaiton.EnableDependentAnimation = true;
+
+        Storyboard.SetTarget(ColorAnimaiton, element);
+        Storyboard.SetTargetProperty(ColorAnimaiton, "Color");
+
+        SB.Begin();
+    }
+    public static void Blink(SolidColorBrush element, SolidColorBrush sourceColor)
+    {
+        Storyboard SB = new();
+
+        var ColorAnimaiton = new ColorAnimation
+        {
+            From = Color.FromArgb(255, 255, 255, 255),
+            To = Color.FromArgb(255, sourceColor.Color.R, sourceColor.Color.G, sourceColor.Color.B),
+            Duration = ClickDuration,
+            EasingFunction = EaseInOut,
+        };
+        SB.Children.Add(ColorAnimaiton);
+
+        ColorAnimaiton.EnableDependentAnimation = true;
+
+        Storyboard.SetTarget(ColorAnimaiton, element);
+        Storyboard.SetTargetProperty(ColorAnimaiton, "Color");
+
+        SB.Begin();
     }
 }

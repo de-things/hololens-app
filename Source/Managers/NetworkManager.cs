@@ -1,6 +1,8 @@
 ﻿using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DT.Source.Managers;
 
@@ -19,15 +21,23 @@ class NetworkManager
 
         req.Method = "POST";
         req.ContentLength = data.Length;
+        req.Timeout = 4000;
 
         using (var stream = req.GetRequestStream())
         {
             stream.Write(data, 0, data.Length);
         }
 
-        var res = (HttpWebResponse)req.GetResponse();
-        var ress = new StreamReader(res.GetResponseStream()).ReadToEnd();
+        try
+        {
+            var res = (HttpWebResponse)req.GetResponse();
+            var ress = new StreamReader(res.GetResponseStream()).ReadToEnd();
 
-        return new() { Code = res.StatusCode, Message = ress };
+            return new() { Code = res.StatusCode, Message = ress };
+        }
+        catch
+        {
+            return new() { Code = 0, Message = "Cannot reach server" };
+        }
     }
 }

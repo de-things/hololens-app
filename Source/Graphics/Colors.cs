@@ -27,6 +27,37 @@ class Colors
             return new SolidColorBrush(color);
         }
     }
+    public static SolidColorBrush Blue
+    {
+        get
+        {
+            var bytes = "#283748".ToRgb();
+            var color = Color.FromArgb(255, bytes[0], bytes[1], bytes[2]);
+
+            return new SolidColorBrush(color);
+        }
+    }
+
+    public static SolidColorBrush SoftGreen
+    {
+        get
+        {
+            var bytes = "#314828".ToRgb();
+            var color = Color.FromArgb(255, bytes[0], bytes[1], bytes[2]);
+
+            return new SolidColorBrush(color);
+        }
+    }
+    public static SolidColorBrush Green
+    {
+        get
+        {
+            var bytes = "#202F1A".ToRgb();
+            var color = Color.FromArgb(255, bytes[0], bytes[1], bytes[2]);
+
+            return new SolidColorBrush(color);
+        }
+    }
     public static SolidColorBrush SoftYellow
     {
         get

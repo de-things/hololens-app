@@ -59,13 +59,14 @@
                 <TextBlock 
                     Name="WelcomeTitle" 
                     Foreground="White" 
-                    FontFamily="/Assets/Fonts/Block-font.otf#Block-font"
+                    FontFamily="/Assets/Fonts/mononoki.otf#mononoki"
                     FontSize="32"
                     FontWeight="Normal"
                     TextAlignment="Center"
                     d:Text="decentralized things"
                     Opacity="0"
-                    d:Opacity="1">
+                    d:Opacity="1"
+                    Margin="5">
                 </TextBlock>
                 <TextBlock 
                     Name="WelcomeHint" 
