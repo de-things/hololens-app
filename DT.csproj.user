@@ -6,13 +6,13 @@
     <RemoteDebugEnabled>true</RemoteDebugEnabled>
   </PropertyGroup>
   <PropertyGroup>
-    <Source>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</Source>
-    <SmallTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</SmallTileSource>
-    <MediumTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</MediumTileSource>
-    <WideTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</WideTileSource>
-    <LargeTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</LargeTileSource>
-    <AppIconSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</AppIconSource>
-    <SplashScreenSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</SplashScreenSource>
-    <PackageLogoSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icon.png</PackageLogoSource>
+    <Source>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</Source>
+    <SmallTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</SmallTileSource>
+    <MediumTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</MediumTileSource>
+    <WideTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</WideTileSource>
+    <LargeTileSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</LargeTileSource>
+    <AppIconSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</AppIconSource>
+    <SplashScreenSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</SplashScreenSource>
+    <PackageLogoSource>C:\Users\supchyan\Downloads\hololens-app\Assets\Icons\Icon.png</PackageLogoSource>
   </PropertyGroup>
 </Project>
