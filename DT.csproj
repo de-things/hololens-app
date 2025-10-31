@@ -127,7 +127,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Globals\Extentions.cs" />
-    <Compile Include="Source\Globals\IpList.cs" />
+    <Compile Include="Source\Configs\Devices.cs" />
     <Compile Include="Source\Globals\Time.cs" />
     <Compile Include="Source\Globals\WorldPointer.cs" />
     <Compile Include="Source\Graphics\Animation.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="Source\Interfaces\IWindow.cs" />
     <Compile Include="Source\Managers\LayoutManager.cs" />
     <Compile Include="Source\Managers\NetworkManager.cs" />
-    <Compile Include="Source\Windows\ExampleLampWindow.cs" />
+    <Compile Include="Source\Windows\LampDeviceWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -191,6 +191,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
+    </PackageReference>
+    <PackageReference Include="System.Text.Json">
+      <Version>9.0.10</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

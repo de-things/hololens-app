@@ -1,4 +1,5 @@
-﻿using DT.Source.Graphics;
+﻿using DT.Source.Configs;
+using DT.Source.Graphics;
 using DT.Source.Windows;
 using System;
 using System.Threading.Tasks;
@@ -17,6 +18,9 @@ namespace DT
         {
             this.InitializeComponent();
 
+            // Generate devices.json to store devices data locally
+            Devices.CreateDevicesDataIsNotExist();
+
             Button MainButton = new();
 
             // Set button properties
@@ -24,7 +28,7 @@ namespace DT
             MainButton.IconSize = new(200, 200);
             MainButton.OnPointerReleased = (e, a) =>
             {
-                new ExampleLampWindow().Initialize();
+                new LampDeviceWindow().Initialize();
                 Log = "";
             };
             // Initialize button

@@ -1,17 +1,23 @@
-﻿using DT.Source.Globals;
+﻿using DT.Source.Configs;
+using DT.Source.Globals;
 using DT.Source.Graphics;
 using DT.Source.Interfaces;
 using DT.Source.Managers;
-using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
-using Windows.Devices.Lights;
 using Windows.UI.Xaml.Media;
+using static DT.Source.Configs.Devices;
 
 namespace DT.Source.Windows;
 
-class ExampleLampWindow : LayoutManager, IWindow
+class LampDeviceWindow : LayoutManager, IWindow
 {
+    const string DEVICE_NAME = "LampDevice";
+
+    List<Device> AllDevices;
+    Device ThisDevice;
+
     bool IsDeviceOnline = false;
 
     Window LampWindow = new();
@@ -19,6 +25,10 @@ class ExampleLampWindow : LayoutManager, IWindow
     Button PopUpButton = new();
     public async void Initialize()
     {
+        // Get device info from devices.json
+        AllDevices = await Devices.GetDevicesData();
+        ThisDevice = Devices.GetDeviceByName(AllDevices, DEVICE_NAME);
+
         // -- Window ---
 
         // Set window title
@@ -52,7 +62,23 @@ class ExampleLampWindow : LayoutManager, IWindow
         PopUpButton.IconSize = new(182, 200);
         PopUpButton.OnPointerReleased = (s, a) =>
         {
-            LampWindow.ShowPopUp(IpList.LampIp, (s, a) => { IpList.LampIp = LampWindow.GetPopUpInput(); TryGetDeviceState(); LampWindow.ShowLoading(); });
+            LampWindow.ShowPopUp(ThisDevice.IP, (s, a) => 
+            {
+                // Change device ip by popup input
+                ThisDevice.IP = LampWindow.GetPopUpInput();
+                
+                // Get a new list of devices with a modified one
+                var newAllDevices = Devices.GetModifiedDevicesData(AllDevices, ThisDevice);
+
+                // Save data in devices.json
+                Devices.WriteDevicesData(newAllDevices);
+
+                // Try to get device state again
+                TryGetDeviceState();
+
+                // Show loading to prevent user to get bored
+                LampWindow.ShowLoading();
+            });
         };
         // Initialize button
         PopUpButton.Initialize();
@@ -66,13 +92,13 @@ class ExampleLampWindow : LayoutManager, IWindow
         {
             IsDeviceOnline = false;
 
-            var url = $"http://{IpList.LampIp}:80/state";
+            var url = $"http://{ThisDevice.IP}:80/state";
             var response = NetworkManager.Send(url, "WHALE");
 
             if (response.Code == 0)
             {
                 LampButton.IsActive = false;
-                MainPage.Log += $"\n[{Time.Current}] Device [{IpList.LampIp}] cannot be reached. Is IP valid or is device online?";
+                MainPage.Log += $"\n[{Time.Current}] {response.Message}";
                 return false;
             }
             else
@@ -81,12 +107,12 @@ class ExampleLampWindow : LayoutManager, IWindow
                 {
                     LampButton.IsActive = response.Message == "1";
                     var status = LampButton.IsActive ? "On" : "Off";
-                    MainPage.Log += $"\n[{Time.Current}] Device [{IpList.LampIp}] state: {status}";
+                    MainPage.Log += $"\n[{Time.Current}] Device [{ThisDevice.IP}] state: {status}";
                 }
                 else
                 {
                     LampButton.IsActive = false;
-                    MainPage.Log += $"\n[{Time.Current}] Unable to get a device [{IpList.LampIp}] state. Device response: {response.Message}";
+                    MainPage.Log += $"\n[{Time.Current}] Unable to get a device [{ThisDevice.IP}] state. Device response: {response.Message}";
                 }
                 return true;
             }
@@ -95,7 +121,7 @@ class ExampleLampWindow : LayoutManager, IWindow
 
         while (!task.IsCompleted)
         {
-            MainPage.Log += $"\n[{Time.Current}] Waiting device [{IpList.LampIp}] to respond...";
+            MainPage.Log += $"\n[{Time.Current}] Waiting device [{ThisDevice.IP}] to respond...";
             await Task.Delay(1000);
         }
 
@@ -113,12 +139,12 @@ class ExampleLampWindow : LayoutManager, IWindow
             return;
         }
 
-        var url = LampButton.IsActive ? $"http://{IpList.LampIp}:80/off" : $"http://{IpList.LampIp}:80/on";
+        var url = LampButton.IsActive ? $"http://{ThisDevice.IP}:80/off" : $"http://{ThisDevice.IP}:80/on";
         var response = NetworkManager.Send(url, "WHALE");
 
         if (response.Code == 0)
         {
-            MainPage.Log += $"\n[{Time.Current}] Device [{IpList.LampIp}] cannot be reached. Is IP valid or is device online?";
+            MainPage.Log += $"\n[{Time.Current}] {response.Message}";
         }
         else
         {
@@ -127,11 +153,11 @@ class ExampleLampWindow : LayoutManager, IWindow
                 LampButton.IsActive = !LampButton.IsActive;
                 LampButton.Update();
                 var status = LampButton.IsActive ? "On" : "Off";
-                MainPage.Log += $"\n[{Time.Current}] Device [{IpList.LampIp}] state: {status}";
+                MainPage.Log += $"\n[{Time.Current}] Device [{ThisDevice.IP}] state: {status}";
             }
             else
             {
-                MainPage.Log += $"\n[{Time.Current}] Unable to change device [{IpList.LampIp}] state. Device response: {response.Message}";
+                MainPage.Log += $"\n[{Time.Current}] Unable to change device [{ThisDevice.IP}] state. Device response: {response.Message}";
             }
         }
     }

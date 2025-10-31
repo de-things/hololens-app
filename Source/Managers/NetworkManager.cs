@@ -17,27 +17,33 @@ class NetworkManager
     {
         byte[] data = Encoding.ASCII.GetBytes(secret);
 
-        HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
-
-        req.Method = "POST";
-        req.ContentLength = data.Length;
-        req.Timeout = 4000;
-
-        using (var stream = req.GetRequestStream())
-        {
-            stream.Write(data, 0, data.Length);
-        }
-
         try
         {
-            var res = (HttpWebResponse)req.GetResponse();
-            var ress = new StreamReader(res.GetResponseStream()).ReadToEnd();
+            HttpWebRequest req = (HttpWebRequest)WebRequest.Create(url);
 
-            return new() { Code = res.StatusCode, Message = ress };
+            req.Method = "POST";
+            req.ContentLength = data.Length;
+            req.Timeout = 4000;
+
+            using (var stream = req.GetRequestStream())
+            {
+                stream.Write(data, 0, data.Length);
+            }
+            try
+            {
+                var res = (HttpWebResponse)req.GetResponse();
+                var ress = new StreamReader(res.GetResponseStream()).ReadToEnd();
+
+                return new() { Code = res.StatusCode, Message = ress };
+            }
+            catch
+            {
+                return new() { Code = 0, Message = $"Cannot reach [{url}]. Is device server online?" };
+            }
         }
         catch
         {
-            return new() { Code = 0, Message = "Cannot reach server" };
+            return new() { Code = 0, Message = $"Cannot send request to {url}. This is not a valid URL." };
         }
     }
 }

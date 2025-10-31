@@ -142,8 +142,8 @@ class LayoutManager
 
         PointerEventHandler OnPopupPointerReleased { get; set; }
 
-        Border PopUpRoot  { get; set; }
-        Grid PopUpRootGrid      { get; set; }
+        Border PopUpRoot   { get; set; }
+        Grid PopUpRootGrid { get; set; }
 
         Border PopUpInputBorder         { get; set; }
         StackPanel PopUpInputStackPanel { get; set; }
@@ -159,13 +159,15 @@ class LayoutManager
         SolidColorBrush LoadingCircleColor { get; set; }
         RotateTransform LoadingCircleRotate { get; set; }
 
+        bool IsPopUpInputFocused { get; set; }
+
         /// <summary>
         /// Returns current PopUp input text.
         /// </summary>
         /// <returns></returns>
         public string GetPopUpInput()
         {
-            return PopUpTextBox.Text;
+            return PopUpTextBox.Text.Replace(@"\", "").Replace(":", "").Replace("\"", "").Replace(" ", "");
         }
         /// <summary>
         /// Shows PopUp with specified input text inside.
@@ -314,10 +316,18 @@ class LayoutManager
                 PopUpTextBox.SelectionLength = 0;
 
                 PopUpInputBorder.Background = Colors.Green;
+
+                PopUpInputContent.Text = PopUpTextBox.Text + "_";
+
+                IsPopUpInputFocused = true;
             };
             PopUpInputBorder.LostFocus += (s, a) =>
             {
                 PopUpInputBorder.Background = Colors.SoftGreen;
+
+                PopUpInputContent.Text = PopUpTextBox.Text;
+
+                IsPopUpInputFocused = false;
             };
 
             PopUpInputBorder.PointerReleased += (s, a) =>
@@ -325,6 +335,8 @@ class LayoutManager
                 PopUpTextBox.Focus(FocusState.Programmatic);
                 PopUpTextBox.SelectionStart = PopUpTextBox.Text.Length;
                 PopUpTextBox.SelectionLength = 0;
+
+                PopUpInputContent.Text = PopUpTextBox.Text;
             };
 
             // Move text fields here
@@ -347,9 +359,28 @@ class LayoutManager
                 FontSize = 18
             };
 
+            // Prevent cursor being moved somewhere else than the last character
+            PopUpTextBox.SelectionChanged += (s, a) =>
+            {
+                PopUpTextBox.SelectionStart = PopUpTextBox.Text.Length;
+                PopUpTextBox.SelectionLength = 0;
+            };
+
             PopUpTextBox.TextChanged += (s, a) =>
             {
-                PopUpInputContent.Text = PopUpTextBox.Text;
+                PopUpTextBox.Text = PopUpTextBox.Text.Replace(@"\", "").Replace(":", "").Replace("\"", "").Replace(" ", "");
+                
+                if (IsPopUpInputFocused)
+                {
+                    PopUpInputContent.Text = PopUpTextBox.Text + "_";
+                }
+                else
+                {
+                    PopUpInputContent.Text = PopUpTextBox.Text;
+                }
+
+                PopUpTextBox.SelectionStart = PopUpTextBox.Text.Length;
+                PopUpTextBox.SelectionLength = 0;
             };
             PopUpTextBox.KeyUp += (s, a) =>
             {
