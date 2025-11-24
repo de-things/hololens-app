@@ -1,7 +1,7 @@
 > [!IMPORTANT]
-> You most likely don't need this source unless you know what is this.
+> You most likely don't need this source unless you don't know what it is.
 >
-> So just skip this repo, if you here just for a `delib` stuff.
+> So just skip this repo, if you here for a **[delib](https://github.com/de-things/delib)** related stuff.
 
 ## 🚃Demo
 <img width="1917" height="1077" alt="image" src="https://github.com/user-attachments/assets/0c731dfe-0858-4a35-bd0c-30ca4a563953" />
