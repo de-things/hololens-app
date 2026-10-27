@@ -1,7 +1,5 @@
-> [!IMPORTANT]
-> You most likely don't need this source unless you don't know what it is.
->
-> So just skip this repo, if you here for a **[delib](https://github.com/de-things/delib)** related stuff.
+> [!CAUTION]
+> This application does not work with modern encrypted API. Use [legacy version](https://github.com/de-things/delib/tree/deprecated) of delib if you plan to deploy this.
 
 ## 🚃Demo
 <img width="1917" height="1077" alt="image" src="https://github.com/user-attachments/assets/0c731dfe-0858-4a35-bd0c-30ca4a563953" />
